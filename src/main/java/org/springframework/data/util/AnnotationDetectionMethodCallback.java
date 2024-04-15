@@ -120,7 +120,7 @@ public class AnnotationDetectionMethodCallback<A extends Annotation> implements 
 
 			if (foundMethod != null && enforceUniqueness) {
 				throw new IllegalStateException(
-						String.format(MULTIPLE_FOUND, foundAnnotation.getClass().getName(), foundMethod, method));
+						String.format(MULTIPLE_FOUND, foundAnnotation.annotationType().getName(), foundMethod, method));
 			}
 
 			this.annotation = foundAnnotation;

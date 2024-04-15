@@ -16,6 +16,7 @@
 package org.springframework.data.convert;
 
 import java.util.Collections;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 import java.util.function.Function;
@@ -92,12 +93,12 @@ record DefaultConverterBuilder<S, T> (ConvertiblePair convertiblePair,
 	}
 
 	DefaultConverterBuilder<S, T> withWriting(Optional<Function<? super S, ? extends T>> writing) {
-		return this.writing == writing ? this
+		return Objects.equals(this.writing, writing) ? this
 				: new DefaultConverterBuilder<S, T>(this.convertiblePair, writing, this.reading);
 	}
 
 	DefaultConverterBuilder<S, T> withReading(Optional<Function<? super T, ? extends S>> reading) {
-		return this.reading == reading ? this
+		return Objects.equals(this.reading, reading) ? this
 				: new DefaultConverterBuilder<S, T>(this.convertiblePair, this.writing, reading);
 	}
 
