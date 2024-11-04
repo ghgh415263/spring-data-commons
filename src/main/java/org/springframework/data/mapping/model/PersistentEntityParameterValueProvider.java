@@ -26,9 +26,7 @@ import org.springframework.lang.Nullable;
 
 /**
  * {@link ParameterValueProvider} based on a {@link PersistentEntity} to use a {@link PropertyValueProvider} to look up
- * the value of the property referenced by the given {@link Parameter}. Additionally, a
- * {@link DefaultSpELExpressionEvaluator} can be configured to get property value resolution trumped by a SpEL
- * expression evaluation.
+ * the value of the property referenced by the given {@link Parameter}.
  *
  * @author Oliver Gierke
  * @author Johannes Englmeier
@@ -42,18 +40,13 @@ public class PersistentEntityParameterValueProvider<P extends PersistentProperty
 	private final @Nullable Object parent;
 
 	public PersistentEntityParameterValueProvider(PersistentEntity<?, P> entity, PropertyValueProvider<P> provider,
-			Object parent) {
+			@Nullable Object parent) {
 		this.entity = entity;
 		this.provider = provider;
 		this.parent = parent;
 	}
 
 	@Override
-	@Nullable
-	private static Object getTransientDefault(Class<?> parameterType) {
-		return parameterType.isPrimitive() ? ReflectionUtils.getPrimitiveDefault(parameterType) : null;
-	}
-
 	@Nullable
 	@SuppressWarnings("unchecked")
 	public <T> T getParameterValue(Parameter<T, P> parameter) {
@@ -82,4 +75,10 @@ public class PersistentEntityParameterValueProvider<P extends PersistentProperty
 
 		return provider.getPropertyValue(property);
 	}
+
+	@Nullable
+	private static Object getTransientDefault(Class<?> parameterType) {
+		return parameterType.isPrimitive() ? ReflectionUtils.getPrimitiveDefault(parameterType) : null;
+	}
+
 }
